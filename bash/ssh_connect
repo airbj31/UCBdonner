@@ -1,0 +1,70 @@
+#!/bin/bash
+
+
+usage() { 
+
+    echo "*****************************************"
+    echo "Simple ssh connection program.\n\n"
+    echo "Byungju Kim Ph.D"
+    echo "Research Scientist / Bioinformatics Team"
+    echo "# 291 Harmony-ro, Yeonsu-gu, Incheon"
+    echo "South Korea 22014."
+    echo "mobile : +82-10-5091-8731"
+    echo "email : byungju.kim@edgc.com"
+    echo "*****************************************\n\n"
+    echo "script Usage: $0 -s <server name> -u <username>" 1>&2; 
+    exit 1; 
+    }
+
+
+##usage
+
+while getopts "s::u:" opt; do
+  case $opt in
+    \?)
+      usage
+      ;;
+    s)
+      s=$OPTARG
+      ;;
+    u)
+      u=$OPTARG
+      ;;
+  esac
+done
+
+## ssh connection info. 
+
+case "$s" in
+    thor)
+      port=9999
+      url=blah.blah.blah.blah
+      ;;
+    data)
+      port=3333
+      url=blah.blah.blah.blah
+      ;;
+esac
+
+## generating ssh connection command
+
+command="ssh"
+
+if [ ! -z "$port" ];
+then
+	command=$command" -p $port"
+fi
+if [ ! -z $u ] ; then
+	command=$command" "$u"@"
+fi
+
+if [ ! -z $url ]; then
+	command="$command""$url"
+else
+	usage;exit 1;
+fi
+
+## connect
+
+$command 
+
